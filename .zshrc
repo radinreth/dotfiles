@@ -5,11 +5,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Apple Silicon Homebrew lives in /opt/homebrew; Intel's /usr/local is on PATH already.
+[[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/radinreth/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -108,20 +111,26 @@ export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
 # Removed: conflicts with asdf node management
 # export PATH="/usr/local/opt/node@10/bin:$PATH"
 # export PATH="/usr/local/bin/node:$PATH"
-source ~/.bash_profile
+[[ -f ~/.bash_profile ]] && source ~/.bash_profile
 
 # Old asdf (commented out for v0.18.0 upgrade)
 # . /usr/local/opt/asdf/libexec/asdf.sh
 
 # asdf v0.18.0 (Go binary)
 # export PATH="$HOME/bin:$PATH"
-export ASDF_DATA_DIR="$HOME/.asdf"
-export PATH="$HOME/.local/bin:$HOME/bin:$ASDF_DATA_DIR/shims:$PATH"
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+# mise where installed (reads the same .tool-versions files), asdf otherwise
+if command -v mise >/dev/null; then
+  eval "$(mise activate zsh)"
+else
+  export ASDF_DATA_DIR="$HOME/.asdf"
+  export PATH="$ASDF_DATA_DIR/shims:$PATH"
+fi
 
 export PATH="/usr/local/opt/openssl@3/bin:$PATH"
 # export PATH="/usr/local/opt/openssl@3/bin:$PATH"
 
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+[[ $(uname -m) == x86_64 ]] && export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 export PATH="/usr/local/sbin:$PATH"
 alias nvim="~/nvim-macos-x86_64/bin/nvim $1"
 
