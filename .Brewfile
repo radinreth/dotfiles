@@ -1,9 +1,11 @@
-# Dev machine packages: `brew bundle --global` installs them, `brew bundle cleanup --global`
-# removes anything not listed. Languages come from mise, databases from Docker.
+# Dev machine packages (the Apple Silicon Mac, set up 2026-10): `brew bundle --global` installs
+# them, `brew bundle cleanup --global` removes anything not listed. Languages come from mise,
+# databases from Docker. Docker Desktop, IntelliJ IDEA and Telegram are installed outside Homebrew.
 
 # shell and tooling
 brew "git"
 brew "git-lfs"
+brew "git-open"
 brew "gh"
 brew "tmux"
 brew "stow"
@@ -25,6 +27,13 @@ brew "mkcert"
 brew "overmind"
 brew "helm"
 
+# shell comforts that replace oh-my-zsh (~/.zsh/aliases.zsh, ~/.zsh/plugins.zsh)
+brew "eza"
+brew "starship"
+brew "zoxide"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+
 # build deps for Ruby and native gems (pg, image_processing)
 brew "openssl@3"
 brew "libyaml"
@@ -36,13 +45,22 @@ brew "vips"
 brew "poppler"
 
 # apps
-cask "orbstack"
-cask "iterm2"
+cask "ghostty"
+cask "google-chrome"
+cask "claude-code"
 cask "rectangle"
 cask "linearmouse"
-cask "font-hack-nerd-font"
+cask "keepingyouawake"
+cask "discord"
 
-# VS Code and its extensions (`code --list-extensions` on the old Mac, 2026-10-30)
+# fonts
+cask "font-jetbrains-mono"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-hack-nerd-font"
+cask "font-iosevka"
+
+# VS Code and its extensions (`code --list-extensions` on the old Mac, 2026-10-30).
+# VS Code was installed by hand on the new Mac: `brew install --cask --adopt visual-studio-code` once.
 cask "visual-studio-code"
 vscode "ambar.bundle-size"
 vscode "anthropic.claude-code"
